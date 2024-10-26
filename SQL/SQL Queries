@@ -1,0 +1,152 @@
+/*KPI*/
+/*Total Debt*/
+SELECT count(id) as Total_Debt FROM `loan portfolio management and performance`.financial_loan;
+
+/*Total Debt MTD (Month-to-Date)*/
+SELECT count(id) as Total_Debt_M12 FROM `loan portfolio management and performance`.financial_loan WHERE MONTH(`issue_date`)=12;
+
+/*Total Debt PMTD (Previous-Month-to-Date)*/
+SELECT count(id) Total_Debt_M111 FROM `loan portfolio management and performance`.financial_loan WHERE MONTH(`issue_date`)=11;
+
+/*Total Fund */
+
+SELECT sum(`loan_amount`) Total_Funds  FROM `loan portfolio management and performance`.financial_loan;
+
+/*Total Fund MTD (Month-to-Date)*/
+
+SELECT sum(`loan_amount`) Total_Funds_M11 FROM `loan portfolio management and performance`.financial_loan WHERE MONTH(`issue_date`)=12;
+
+/*Total Fund PMTD (Previous-Month-to-Date)*/
+
+SELECT sum(`loan_amount`) Total_Funds_M12 FROM `loan portfolio management and performance`.financial_loan WHERE MONTH(`issue_date`)=11;
+
+/*Total Good Debt  (Month-to-Date)*/
+SELECT  SUM(CASE WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1 ELSE 0 END ) as Total_Good_Debt  
+FROM `loan portfolio management and performance`.financial_loan;
+
+/*Total Good Fund  (Month-to-Date)*/
+SELECT sum(`loan_amount`) Total_Good_Funds  FROM `loan portfolio management and performance`.financial_loan WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+/*Percent of Good Debt */
+SELECT  (SUM(CASE WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1 ELSE 0 END )  /COUNT(`id`) )*100 as Percent_Good_Debt
+FROM `loan portfolio management and performance`.financial_loan;
+
+/*Percent of Good Fund */
+SELECT (sum(`loan_amount`)/(SELECT SUM(`loan_amount`) FROM financial_loan ))*100 Percent_Good_Funds  FROM `loan portfolio management and performance`.financial_loan 
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+/*Total Good Debt and Fund  (Month-to-Date)*/
+SELECT  SUM(CASE WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1 ELSE 0 END ) as Total_Good_Debt_M112, sum(`loan_amount`) Total_Good_Funds_M12
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`)=12;
+
+/*Total Good Debt and Fund  (Previous-Month-to-Date)*/
+
+SELECT  SUM(CASE WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1 ELSE 0 END ) as Total_Good_Debt_M11,sum(`loan_amount`) Total_Good_Funds_M11
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`)=11;
+
+/*Total Bad Funds */
+SELECT sum(`loan_amount`) Total_Bad_Funds  FROM `loan portfolio management and performance`.financial_loan WHERE `loan_status` = 'Charged Off' ;
+
+
+/*Total Good Funds Compare with Bad Funds */
+SELECT sum(`loan_amount`) Total_Bad_Funds,
+	(SELECT sum(`loan_amount`)   
+FROM `loan portfolio management and performance`.financial_loan 
+WHERE `loan_status` = 'Charged Off') Total_Bad_Funds  
+FROM `loan portfolio management and performance`.financial_loan WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' 
+;
+
+/*Percent Bad Funds */
+SELECT  100-(sum(`loan_amount`)/(SELECT SUM(`loan_amount`) FROM financial_loan ))*100 Percent_Bad_Funds  FROM `loan portfolio management and performance`.financial_loan WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+/*Percent Good Funds Compare with Bad Funds */
+SELECT (sum(`loan_amount`)/(SELECT SUM(`loan_amount`) FROM financial_loan ))*100 Percent_Good_Funds, 100-(sum(`loan_amount`)/(SELECT SUM(`loan_amount`) FROM financial_loan ))*100 Percent_Bad_Funds  FROM `loan portfolio management and performance`.financial_loan WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+/*Total Payment Received */
+SELECT sum(`total_payment`) Total_Payment_Received FROM `loan portfolio management and performance`.financial_loan;
+
+
+/*AVG int rate */
+SELECT ROUND(AVG(`int_rate`)*100,2) AVG_int_rate FROM `loan portfolio management and performance`.financial_loan;
+
+
+/*AVG dti rate */
+SELECT ROUND(AVG(`dti`)*100,2) AVG_dti_rate FROM `loan portfolio management and performance`.financial_loan;
+
+/*Loan Report */
+/*Overview */
+SELECT EXTRACT(MONTH FROM  `issue_date`) MONTH, 
+        2021 AS YEAR,
+        COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY EXTRACT(MONTH FROM  `issue_date`) ORDER BY MONTH ;
+
+/*State */
+SELECT `address_state` State ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `address_state`;
+
+/*Update Emp_lengh field for camparing */
+UPDATE `loan portfolio management and performance`.financial_loan
+SET `emp_length` = '10> years'
+WHERE `emp_length` LIKE '10+%';
+
+
+/*Working_years */
+SELECT emp_length Working_years ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY emp_length ORDER BY Working_years ;
+
+
+/*Grade */
+SELECT `grade`  ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `grade` ORDER BY `grade`;
+
+
+/*Home Ownership */
+SELECT `home_ownership`  ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `home_ownership` ;
+
+
+/*Purpose */
+SELECT `purpose`  ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `purpose` ;
+
+
+/*Term  */
+SELECT `term`  ,COUNT(`id`) Total_Debt,
+       SUM(`loan_amount`) Total_Fund,
+       SUM(`total_payment`) Total_Receive,
+       ROUND(AVG(`int_rate`),2) int_rate,
+       ROUND(AVG(`dti`),2) dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `term` ;
