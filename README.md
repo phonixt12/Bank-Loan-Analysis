@@ -36,6 +36,7 @@ The project aim to analyze the data source and give an actionable insights which
 **Data Analysis and SQL Queries:**
 **Objective:** This step extract the data for analyzing which give insights, and KPI indicator.
 **Process:** SQL queries were used to extract important KPI as : total and monthly loan applications, funded amounts, and average interest rates. It will give an specific view about trend and lending operation
+
 **Categorization of Loans:**
 **Objective:** Classify loans based on repayment performance.
 **Process:** Shows the distribution between good and bad loans and classified using KPI indices (applications, funding, payments) and presented as percentages. It support in risk assessment.
@@ -52,15 +53,15 @@ The project aim to analyze the data source and give an actionable insights which
 ---
 # Key Insights and Findings
 
-Total Loan Applications : the total customer are lending in bank. The Month-To-Date (MTD) and Previous Month-To-Date (PMTD) metrics, providing insights into monthly application trends
+**Total Loan Applications :** the total customer are lending in bank. The Month-To-Date (MTD) and Previous Month-To-Date (PMTD) metrics, providing insights into monthly application trends
 
-Total Funded Amount vs. Amounts Received: those metrics will shown the bank's situation and bank revenue which support stakeholders in decison making  for future strategies.
+**Total Funded Amount vs. Amounts Received:** those metrics will shown the bank's situation and bank revenue which support stakeholders in decison making  for future strategies.
 
-Average Interest Rate and DTI (Debt-to-Income Ratio): assess the interest and DTI support bank for managing bank's health financial and customer weathy.
+**Average Interest Rate and DTI (Debt-to-Income Ratio):** assess the interest and DTI support bank for managing bank's health financial and customer weathy.
 
-Loan Categorization : categorize data into 2 type (Good and Bad) support operation team to minimize the risk and have solution for reducing the bad loan.
+**Loan Categorization :** categorize data into 2 type (Good and Bad) support operation team to minimize the risk and have solution for reducing the bad loan.
 
-Detailed Breakdowns by Various Factors: In-depth analysis by loan status, purpose, state, term, and other factors to identify underlying patterns and trends influencing loan performance and customer behavior
+**Detailed Breakdowns by Various Factors:** In-depth analysis by loan status, purpose, state, term, and other factors to identify underlying patterns and trends influencing loan performance and customer behavior
 
 ---
 # Tools and Technologies Used
