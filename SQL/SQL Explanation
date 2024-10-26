@@ -1,12 +1,12 @@
-**1.Total Debt**
+--1.Total Debt--
 
 SELECT COUNT(id) AS Total_Debt
 FROM `loan portfolio management and performance`.financial_loan;
 
 **Explanation:**
-**•	Purpose:** Calculates the total number of loans (debts) in the financial_loan table.
-**•	COUNT(id):** Counts all non-null id values, representing each loan record.
-**•	Alias:** The result is labeled as Total_Debt for clarity.
+**Purpose:** Calculates the total number of loans (debts) in the financial_loan table.
+**COUNT(id):** Counts all non-null id values, representing each loan record.
+**Alias:** The result is labeled as Total_Debt for clarity.
 ________________________________________
 **2. Total Debt MTD (Month-to-Date)**
 
