@@ -33,21 +33,22 @@ The data of this project is taked from the Internet. This is the link of the dat
 
 The project aim to analyze the data source and give an actionable insights which support the bank in decision making
 
-**Data Analysis and SQL Queries:**
-**Objective:** This step extract the data for analyzing which give insights, and KPI indicator.
+**Data Analysis and SQL Queries:** <br>
+**Objective:** This step extract the data for analyzing which give insights, and KPI indicator. <br>
 **Process:** SQL queries were used to extract important KPI as : total and monthly loan applications, funded amounts, and average interest rates. It will give an specific view about trend and lending operation
 
-**Categorization of Loans:**
-**Objective:** Classify loans based on repayment performance.
+**Categorization of Loans:** <br>
+**Objective:** Classify loans based on repayment performance. <br>
 **Process:** Shows the distribution between good and bad loans and classified using KPI indices (applications, funding, payments) and presented as percentages. It support in risk assessment.
 
-**Temporal and Categorical Analysis:**
-**Objective:** Examine the data across various dimensions and time frames.
+
+**Temporal and Categorical Analysis:** <br>
+**Objective:** Examine the data across various dimensions and time frames.<br>
 **Process:** Detailed analysis was conducted based on multiple factors, including issue month, state, loan term, employee length, loan purpose, and home ownership status. This multifaceted analysis enabled a comprehensive understanding of the factors influencing loan performance.
 
 
-**Visualization:**
-**Objective:** Transform data into actionable visual insights.
+**Visualization:** <br>
+**Objective:** Transform data into actionable visual insights.<br>
 **Process:** The results from the SQL queries were visualized using Power BI. The visualizations was designed to ensure data consistency and to provide a clear, graphical representation of the findings. This step was critical for communicating insights effectively to stakeholders.
 
 ---
@@ -65,10 +66,9 @@ The project aim to analyze the data source and give an actionable insights which
 
 ---
 # Tools and Technologies Used
+**MySQL Workbench :** extract, query and analysis the datasource.SQL have crucial role in extracting key metrics and trends <br>
 
-MySQL Workbench : extract, query and analysis the datasource.SQL have crucial role in extracting key metrics and trends
-
-Power BI: Employed for data visualization and dashboard creation. Using Power BI to create an interactive dashboards that visualize loan portfolio performance and trends.
+**Power BI:** Employed for data visualization and dashboard creation. Using Power BI to create an interactive dashboards that visualize loan portfolio performance and trends.
 
 ---
 
