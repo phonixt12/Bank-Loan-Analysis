@@ -1,0 +1,418 @@
+1. Total Debt
+
+SELECT COUNT(id) AS Total_Debt
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the total number of loans (debts) in the financial_loan table.
+•	COUNT(id): Counts all non-null id values, representing each loan record.
+•	Alias: The result is labeled as Total_Debt for clarity.
+________________________________________
+2. Total Debt MTD (Month-to-Date)
+
+
+SELECT COUNT(id) AS Total_Debt_M12
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 12;
+
+Explanation:
+•	Purpose: Counts the total number of loans issued in the month of December.
+•	MONTH(issue_date) = 12: Filters loans where the issue month is December.
+•	Alias: The result is labeled as Total_Debt_M12.
+________________________________________
+3. Total Debt PMTD (Previous-Month-to-Date)
+
+
+SELECT COUNT(id) AS Total_Debt_M11
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 11;
+
+Explanation:
+•	Purpose: Counts the total number of loans issued in the previous month (November).
+•	MONTH(issue_date) = 11: Filters loans where the issue month is November.
+•	Alias: The result is labeled as Total_Debt_M11.
+________________________________________
+4. Total Funds
+
+
+SELECT SUM(`loan_amount`) AS Total_Funds
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the total amount of funds loaned out.
+•	SUM(loan_amount): Sums up all loan amounts in the table.
+•	Alias: The result is labeled as Total_Funds.
+________________________________________
+5. Total Funds MTD (Month-to-Date)
+
+
+SELECT SUM(`loan_amount`) AS Total_Funds_M12
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 12;
+
+Explanation:
+•	Purpose: Calculates the total loan amount issued in December.
+•	MONTH(issue_date) = 12: Filters loans issued in December.
+•	Alias: The result is labeled as Total_Funds_M12.
+________________________________________
+6. Total Funds PMTD (Previous-Month-to-Date)
+
+
+SELECT SUM(`loan_amount`) AS Total_Funds_M11
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 11;
+
+Explanation:
+•	Purpose: Calculates the total loan amount issued in November.
+•	MONTH(issue_date) = 11: Filters loans issued in November.
+•	Alias: The result is labeled as Total_Funds_M11.
+________________________________________
+7. Total Good Debt
+
+
+SELECT SUM(
+    CASE
+        WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1
+        ELSE 0
+    END
+) AS Total_Good_Debt
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Counts the number of loans that are either fully paid or currently being paid (considered good debts).
+•	CASE WHEN: Assigns a value of 1 to good loans and 0 otherwise.
+•	SUM(...): Adds up the total number of good loans.
+•	Alias: The result is labeled as Total_Good_Debt.
+________________________________________
+8. Total Good Funds
+
+
+SELECT SUM(`loan_amount`) AS Total_Good_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+Explanation:
+•	Purpose: Calculates the total loan amount for loans that are fully paid or currently active.
+•	WHERE: Filters loans with statuses of 'Fully Paid' or 'Current'.
+•	Alias: The result is labeled as Total_Good_Funds.
+________________________________________
+9. Percent of Good Debt
+
+
+SELECT (
+    SUM(
+        CASE
+            WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1
+            ELSE 0
+        END
+    ) / COUNT(`id`)
+) * 100 AS Percent_Good_Debt
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the percentage of loans that are considered good debts.
+•	SUM(CASE...)/COUNT(id): Divides the number of good loans by the total number of loans.
+•	* 100: Converts the ratio to a percentage.
+•	Alias: The result is labeled as Percent_Good_Debt.
+________________________________________
+10. Percent of Good Funds
+
+
+SELECT (
+    SUM(`loan_amount`) / (SELECT SUM(`loan_amount`) FROM financial_loan)
+) * 100 AS Percent_Good_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+Explanation:
+•	Purpose: Calculates the percentage of total loan funds that are good funds.
+•	SUM(loan_amount): Sums loan amounts of good loans.
+•	(SELECT SUM(loan_amount) FROM financial_loan): Retrieves the total loan amount across all loans.
+•	Alias: The result is labeled as Percent_Good_Funds.
+________________________________________
+11. Total Good Debt and Funds MTD (Month-to-Date)
+
+
+SELECT
+    SUM(
+        CASE
+            WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1
+            ELSE 0
+        END
+    ) AS Total_Good_Debt_M12,
+    SUM(`loan_amount`) AS Total_Good_Funds_M12
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 12;
+
+
+Explanation:
+•	Purpose: Calculates the total number of good loans and the total good funds issued in December.
+•	MONTH(issue_date) = 12: Filters data for December.
+•	Aliases: Results are labeled as Total_Good_Debt_M12 and Total_Good_Funds_M12.
+________________________________________
+12. Total Good Debt and Funds PMTD (Previous-Month-to-Date)
+
+
+SELECT
+    SUM(
+        CASE
+            WHEN `loan_status` = 'Fully Paid' OR `loan_status` = 'Current' THEN 1
+            ELSE 0
+        END
+    ) AS Total_Good_Debt_M11,
+    SUM(`loan_amount`) AS Total_Good_Funds_M11
+FROM `loan portfolio management and performance`.financial_loan
+WHERE MONTH(`issue_date`) = 11;
+
+Explanation:
+•	Purpose: Calculates the total number of good loans and the total good funds issued in November.
+•	MONTH(issue_date) = 11: Filters data for November.
+•	Aliases: Results are labeled as Total_Good_Debt_M11 and Total_Good_Funds_M11.
+________________________________________
+13. Total Bad Funds
+
+
+SELECT SUM(`loan_amount`) AS Total_Bad_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Charged Off';
+
+Explanation:
+•	Purpose: Calculates the total loan amount for loans that have been charged off (considered bad funds).
+•	WHERE loan_status = 'Charged Off': Filters loans with a status of 'Charged Off'.
+•	Alias: The result is labeled as Total_Bad_Funds.
+________________________________________
+14. Total Good Funds Compared with Bad Funds
+
+
+SELECT
+    SUM(`loan_amount`) AS Total_Good_Funds,
+    (
+        SELECT SUM(`loan_amount`)
+        FROM `loan portfolio management and performance`.financial_loan
+        WHERE `loan_status` = 'Charged Off'
+    ) AS Total_Bad_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+Explanation:
+•	Purpose: Compares the total good funds with the total bad funds.
+•	Outer Query: Calculates total good funds.
+•	Subquery: Calculates total bad funds.
+•	Aliases: Results are labeled as Total_Good_Funds and Total_Bad_Funds.
+________________________________________
+15. Percent Bad Funds
+
+
+SELECT
+    100 - (
+        SUM(`loan_amount`) / (SELECT SUM(`loan_amount`) FROM financial_loan)
+    ) * 100 AS Percent_Bad_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+Explanation:
+•	Purpose: Calculates the percentage of total loan funds that are bad funds.
+•	100 - (...): Subtracts the percentage of good funds from 100% to get the bad funds percentage.
+•	Alias: The result is labeled as Percent_Bad_Funds.
+________________________________________
+16. Percent Good Funds Compared with Bad Funds
+
+
+SELECT
+    (SUM(`loan_amount`) / (SELECT SUM(`loan_amount`) FROM financial_loan)) * 100 AS Percent_Good_Funds,
+    100 - (SUM(`loan_amount`) / (SELECT SUM(`loan_amount`) FROM financial_loan)) * 100 AS Percent_Bad_Funds
+FROM `loan portfolio management and performance`.financial_loan
+WHERE `loan_status` = 'Fully Paid' OR `loan_status` = 'Current';
+
+
+Explanation:
+•	Purpose: Calculates both the percentage of good funds and bad funds.
+•	First Expression: Calculates Percent_Good_Funds.
+•	Second Expression: Calculates Percent_Bad_Funds by subtracting the good funds percentage from 100%.
+•	Aliases: Results are labeled as Percent_Good_Funds and Percent_Bad_Funds.
+________________________________________
+17. Total Payment Received
+
+
+SELECT SUM(`total_payment`) AS Total_Payment_Received
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the total payments received from all loans.
+•	SUM(total_payment): Adds up all payments made towards loans.
+•	Alias: The result is labeled as Total_Payment_Received.
+________________________________________
+18. Average Interest Rate
+
+
+SELECT ROUND(AVG(`int_rate`) * 100, 2) AS AVG_int_rate
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the average interest rate across all loans.
+•	AVG(int_rate) * 100: Calculates the average interest rate and converts it to a percentage.
+•	ROUND(..., 2): Rounds the result to two decimal places.
+•	Alias: The result is labeled as AVG_int_rate.
+________________________________________
+19. Average Debt-to-Income (DTI) Rate
+
+
+SELECT ROUND(AVG(`dti`) * 100, 2) AS AVG_dti_rate
+FROM `loan portfolio management and performance`.financial_loan;
+
+Explanation:
+•	Purpose: Calculates the average debt-to-income ratio across all loans.
+•	AVG(dti) * 100: Calculates the average DTI ratio and converts it to a percentage.
+•	ROUND(..., 2): Rounds the result to two decimal places.
+•	Alias: The result is labeled as AVG_dti_rate.
+________________________________________
+20. Loan Report Overview
+
+
+SELECT
+    EXTRACT(MONTH FROM `issue_date`) AS MONTH,
+    2021 AS YEAR,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY EXTRACT(MONTH FROM `issue_date`)
+ORDER BY MONTH;
+
+Explanation:
+•	Purpose: Provides a monthly overview of loan performance metrics for the year 2021.
+•	Columns:
+o	MONTH: Extracts the month from issue_date.
+o	YEAR: Sets the year as 2021.
+o	COUNT(id): Counts the total loans per month.
+o	SUM(loan_amount): Sums total funds per month.
+o	SUM(total_payment): Sums total payments received per month.
+o	AVG(int_rate) and AVG(dti): Calculates average interest and DTI rates per month.
+•	GROUP BY: Groups data by month.
+•	ORDER BY MONTH: Orders the results by month.
+________________________________________
+21. Loan Report by State
+
+
+SELECT
+    `address_state` AS State,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `address_state`;
+
+Explanation:
+•	Purpose: Summarizes loan performance metrics grouped by state.
+•	Columns:
+o	State: The borrower's state of residence.
+o	Other columns as previously explained.
+•	GROUP BY address_state: Groups data by state.
+________________________________________
+22. Update Employment Length Field
+
+
+UPDATE `loan portfolio management and performance`.financial_loan
+SET `emp_length` = '10> years'
+WHERE `emp_length` LIKE '10+%';
+
+Explanation:
+•	Purpose: Standardizes the employment length field for better comparison.
+•	SET emp_length = '10> years': Updates the employment length to '10> years'.
+•	WHERE emp_length LIKE '10+%': Targets records where emp_length starts with '10+'.
+________________________________________
+23. Loan Report by Working Years
+
+
+SELECT
+    emp_length AS Working_years,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY emp_length
+ORDER BY Working_years;
+
+Explanation:
+•	Purpose: Provides loan performance metrics grouped by the borrower's years of employment.
+•	Alias: emp_length is labeled as Working_years.
+•	GROUP BY emp_length: Groups data by employment length.
+•	ORDER BY Working_years: Orders results by working years.
+________________________________________
+24. Loan Report by Grade
+
+
+SELECT
+    `grade`,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `grade`
+ORDER BY `grade`;
+
+Explanation:
+•	Purpose: Summarizes loan metrics grouped by loan grade.
+•	GROUP BY grade: Groups data by the loan grade.
+•	ORDER BY grade: Orders results by grade.
+________________________________________
+25. Loan Report by Home Ownership
+
+
+SELECT
+    `home_ownership`,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `home_ownership`;
+
+Explanation:
+•	Purpose: Provides loan performance metrics based on borrowers' home ownership status.
+•	GROUP BY home_ownership: Groups data by home ownership categories.
+________________________________________
+26. Loan Report by Purpose
+
+
+SELECT
+    `purpose`,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `purpose`;
+
+Explanation:
+•	Purpose: Summarizes loan metrics based on the purpose of the loan.
+•	GROUP BY purpose: Groups data by loan purpose (e.g., debt consolidation, home improvement).
+________________________________________
+27. Loan Report by Term
+
+
+SELECT
+    `term`,
+    COUNT(`id`) AS Total_Debt,
+    SUM(`loan_amount`) AS Total_Fund,
+    SUM(`total_payment`) AS Total_Receive,
+    ROUND(AVG(`int_rate`), 2) AS int_rate,
+    ROUND(AVG(`dti`), 2) AS dti_rate
+FROM `loan portfolio management and performance`.financial_loan
+GROUP BY `term`;
+
+
+Explanation:
+•	Purpose: Provides loan metrics grouped by loan term length.
+•	GROUP BY term: Groups data by the term of the loan (e.g., 36 months, 60 months)
+
