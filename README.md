@@ -33,22 +33,21 @@ The data of this project is taked from the Internet. This is the link of the dat
 
 The project aim to analyze the data source and give an actionable insights which support the bank in decision making
 
-Data Analysis and SQL Queries:
-Objective: This step extract the data for analyzing which give insights, and KPI indicator.
-Process: SQL queries were used to extract important KPI as : total and monthly loan applications, funded amounts, and average interest rates. It will give an specific view about trend and lending operation
+**Data Analysis and SQL Queries:**
+**Objective:** This step extract the data for analyzing which give insights, and KPI indicator.
+**Process:** SQL queries were used to extract important KPI as : total and monthly loan applications, funded amounts, and average interest rates. It will give an specific view about trend and lending operation
+**Categorization of Loans:**
+**Objective:** Classify loans based on repayment performance.
+**Process:** Shows the distribution between good and bad loans and classified using KPI indices (applications, funding, payments) and presented as percentages. It support in risk assessment.
 
-Categorization of Loans:
-Objective: Classify loans based on repayment performance.
-Process: Shows the distribution between good and bad loans and
-Classified using KPI indices (applications, funding, payments) and presented as percentages. It support in risk assessment.
+**Temporal and Categorical Analysis:**
+**Objective:** Examine the data across various dimensions and time frames.
+**Process:** Detailed analysis was conducted based on multiple factors, including issue month, state, loan term, employee length, loan purpose, and home ownership status. This multifaceted analysis enabled a comprehensive understanding of the factors influencing loan performance.
 
-Temporal and Categorical Analysis:
-Objective: Examine the data across various dimensions and time frames.
-Process: Detailed analysis was conducted based on multiple factors, including issue month, state, loan term, employee length, loan purpose, and home ownership status. This multifaceted analysis enabled a comprehensive understanding of the factors influencing loan performance.
 
-Visualization:
-Objective: Transform data into actionable visual insights.
-Process: The results from the SQL queries were visualized using Power BI. The visualizations was designed to ensure data consistency and to provide a clear, graphical representation of the findings. This step was critical for communicating insights effectively to stakeholders.
+**Visualization:**
+**Objective:** Transform data into actionable visual insights.
+**Process:** The results from the SQL queries were visualized using Power BI. The visualizations was designed to ensure data consistency and to provide a clear, graphical representation of the findings. This step was critical for communicating insights effectively to stakeholders.
 
 ---
 # Key Insights and Findings
