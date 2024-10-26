@@ -26,7 +26,7 @@ Have a close look in final health of bank like : Total Funded Amount, Average In
 ---
 # Data Source
 
-The data of this project is taked from the Internet. This is the link of the datasource : [link]
+The data of this project is taked from the Internet. This is the link of the datasource : [link](https://github.com/phonixt12/Bank-Loan-Analysis/tree/main/data%20source)
 
 ---
 # Methodology
